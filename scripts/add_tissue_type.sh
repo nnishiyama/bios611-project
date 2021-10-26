@@ -7,4 +7,5 @@ do BASE=${f##*/};
 TISSUE=${BASE%%.*}; 
 sed -i "" "s/$/	$TISSUE/" $f;
 sed -i "" "1s/$TISSUE/tissue/" $f;
+sed -i "" "s/_b38//" $f;
 done;
