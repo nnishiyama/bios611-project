@@ -25,13 +25,22 @@ Then visit http://localhost:8787 in your browser. Log in with user `rstudio` and
 Shiny App
 =========
 
-To run the shiny app, clone this repo then run:
+To run the shiny app, clone this repo, build the docker image, then run:
 
 ```
-docker run \
--p 8080:8080 \
--v `pwd`:/home/rstudio/project \
--e PASSWORD=$SECRET_PWD \
--it l13 sudo -H -u rstudio \
-/bin/bash -c "cd ~/project; Rscript scripts/shiny_plot_eqtls.R"
+docker run -d \
+       -p 8080:8080 \
+       -p 8787:8787 \
+       -e PASSWORD=pilot
+       -v $(pwd):/home/rstudio/project
+       -t eqtl
+```
+
+Then connect via the browser: http://localhost:8787 with user `rstudio` and password `pilot`.
+
+Launch the Shiny app from the command line/terminal within Rstudio:
+
+```
+cd project/;
+Rscript shiny/shiny_plot_eqtls.R;
 ```

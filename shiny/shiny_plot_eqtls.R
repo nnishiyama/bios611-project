@@ -3,7 +3,7 @@ library(tidyverse)
 library(ggplot2)
 library(shiny)
 
-data <- read_tsv("merged_egenes.txt")
+data <- read_tsv("shiny/merged_egenes.txt")
 data <- data %>% select(gene_name, slope, tissue)
 data <- data %>% arrange(desc(abs(slope)))
 genes <- unique(data$gene_name)
