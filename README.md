@@ -4,7 +4,14 @@ BIOS611 Project
 This is my project to analyze eQTLs from the Genotype-Tissue Expression (GTEx) project.
 Something about why eQTLs are important & interesting. 
 
-To run this code, build the docker container as follows:
+To run this code, first clone this repo by typing the following into your command line/terminal:
+
+```
+git clone https://github.com/nnishiyama/bios611-project
+cd bios611-project/
+```
+
+Then build the docker container as follows:
 
 ```
 docker build . -t eqtl
@@ -20,6 +27,14 @@ docker run -e PASSWORD=pilot \
 ```
 
 Then visit http://localhost:8787 in your browser. Log in with user `rstudio` and password `pilot`.
+
+Within RStudio, select the `Terminal` tab and move into the project directory:
+
+```
+cd project/
+```
+
+Finally, use `make` to generate targets.
 
 
 Shiny App

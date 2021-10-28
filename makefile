@@ -11,11 +11,11 @@ working_data/merged_egenes.txt: source_data/GTEx_Analysis_v8_eQTL/genes/
 	tail -n +2 -q source_data/GTEx_Analysis_v8_eQTL/genes/*.v8.egenes.txt >> working_data/merged_egenes.txt;
 
 preprocessed_data: source_data/GTEx_Analysis_v8_eQTL/
-	#./scripts/add_tissue_type.sh source_data/GTEx_Analysis_v8_eQTL/;
+	./scripts/add_tissue_type.sh source_data/GTEx_Analysis_v8_eQTL/;
 	mkdir source_data/GTEx_Analysis_v8_eQTL/eqtl;
 	mkdir source_data/GTEx_Analysis_v8_eQTL/genes;
-	mv *.v8.egenes.txt source_data/GTEx_Analysis_v8_eQTL/eqtl/;
-	mv *.v8.signif_variant_gene_pairs.txt source_data/GTEx_Analysis_v8_eQTL/genes;
+	mv source_data/GTEx_Analysis_v8_eQTL/*.v8.egenes.txt source_data/GTEx_Analysis_v8_eQTL/genes/;
+	mv source_data/GTEx_Analysis_v8_eQTL/*.v8.signif_variant_gene_pairs.txt source_data/GTEx_Analysis_v8_eQTL/eqtl;
 
 source_data:
 	echo "WARNING: the source data for this project is ~10G";
