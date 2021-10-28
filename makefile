@@ -1,5 +1,9 @@
-processed_data: source_data/GTEx_Analysis_v8_eQTL/ 
-	mkdir processed_data;
+figures/fig2.png: working_data/merged_egenes.txt
+	Rscript scripts/tss_distance_vs_slope_plot.R
+
+figures/fig1.png: working_data/merged_egenes.txt
+	mkdir figures;
+	Rscript scripts/tss_distance_plots.R
 
 working_data/merged_egenes.txt: source_data/GTEx_Analysis_v8_eQTL/genes/
 	mkdir working_data;
@@ -23,5 +27,5 @@ source_data:
 
 
 clean:
-	rm -r processed_data/
+	rm -r working_data/
 	#rm -r source_data/
