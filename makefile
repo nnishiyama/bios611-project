@@ -1,9 +1,10 @@
 processed_data: source_data/GTEx_Analysis_v8_eQTL/ 
 	mkdir processed_data;
 
-source_data/GTEx_Analysis_v8_eQTL/genes/merged_egenes.txt: source_data/GTEx_Analysis_v8_eQTL/genes/
-	head -1 source_data/GTEx_Analysis_v8_eQTL/genes/Lung.v8.egenes.txt > source_data/GTEx_Analysis_v8_eQTL/genes/merged_egenes.txt;
-	tail -n +2 -q source_data/GTEx_Analysis_v8_eQTL/genes/*.v8.egenes.txt >> source_data/GTEx_Analysis_v8_eQTL/genes/merged_egenes.txt;
+working_data/merged_egenes.txt: source_data/GTEx_Analysis_v8_eQTL/genes/
+	mkdir working_data;
+	head -1 source_data/GTEx_Analysis_v8_eQTL/genes/Lung.v8.egenes.txt > working_data/merged_egenes.txt;
+	tail -n +2 -q source_data/GTEx_Analysis_v8_eQTL/genes/*.v8.egenes.txt >> working_data/merged_egenes.txt;
 
 preprocessed_data: source_data/GTEx_Analysis_v8_eQTL/
 	#./scripts/add_tissue_type.sh source_data/GTEx_Analysis_v8_eQTL/;
