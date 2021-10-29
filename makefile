@@ -28,4 +28,5 @@ source_data:
 
 clean:
 	rm -r working_data/
+	rm -r figures/
 	#rm -r source_data/
