@@ -9,6 +9,8 @@ This is my project to analyze expression Quantitative Trait Loci (eQTL) from the
  - If I can detect some leading or shared signals, do genetic variants act in the same way across tissues (or do the effects correlate?)?
  - And other fun stuff!
 
+*** Fair Warning: the source data for this project requires ~10G of space, so plan accordingly! ***
+
 
 
 To run this code, first clone this repo by typing the following into your command line/terminal:
@@ -18,13 +20,13 @@ git clone https://github.com/nnishiyama/bios611-project
 cd bios611-project/
 ```
 
-Then build the docker container as follows:
+Then build the Docker container as follows:
 
 ```
 docker build . -t eqtl
 ```
 
-And then start an RStudio server like this:
+And then start an RStudio server inside the Docker container like this:
 
 ```
 docker run -e PASSWORD=pilot \
@@ -42,6 +44,12 @@ cd project/
 ```
 
 Finally, use `make` to generate targets.
+
+To build the report summarizing my data science project, run the following command in the `Terminal` tab:
+
+```
+make report.pdf
+```
 
 
 Shiny App
