@@ -3,7 +3,10 @@
 
 source_data/
 scratch/
-working_data/
+data/
 figures/
 
 Rplots.pdf
+download_source_data
+make_directories
+preprocessed_data

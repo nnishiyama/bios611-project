@@ -10,22 +10,25 @@ figures/fig3.png: working_data/merged_egenes.txt preprocessed_data download_sour
 	rm -f figures/fig3.png;
 	Rscript scripts/tss_distance_vs_slope_plot.R
 
-figures/fig2.png: working_data/merged_egenes.txt preprocessed_data download_source_data
+figures/fig2.png: data/merged_egenes.txt
 	rm -f figures/fig2.png;
 	Rscript scripts/tss_distance_vs_significance.R
 
-figures/fig1.png: working_data/merged_egenes.txt preprocessed_data download_source_data
+figures/fig1.png: data/merged_egenes.txt
 	rm -f figures/fig1.png;
-	mkdir figures;
 	Rscript scripts/tss_distance_plots.R
 
-working_data/merged_egenes.txt: preprocessed_data download_source_data source_data/GTEx_Analysis_v8_eQTL/genes/
-	rm -f working_data/merged_egenes.txt;
-	mkdir working_data;
-	head -1 source_data/GTEx_Analysis_v8_eQTL/genes/Lung.v8.egenes.txt > working_data/merged_egenes.txt;
-	tail -n +2 -q source_data/GTEx_Analysis_v8_eQTL/genes/*.v8.egenes.txt >> working_data/merged_egenes.txt;
+data/merged_egenes.txt: make_directories
+	rm -fr working_data/;
+	head -1 source_data/GTEx_Analysis_v8_eQTL/genes/Lung.v8.egenes.txt > data/merged_egenes.txt;
+	tail -n +2 -q source_data/GTEx_Analysis_v8_eQTL/genes/*.v8.egenes.txt >> data/merged_egenes.txt;
 
-preprocessed_data: download_source_data source_data/GTEx_Analysis_v8_eQTL/
+make_directories: preprocessed_data
+	rm -f make_directories;
+	mkdir data figures;
+	touch make_directories;
+
+preprocessed_data: download_source_data
 	rm -f preprocessed_data;
 	./scripts/add_tissue_type.sh source_data/GTEx_Analysis_v8_eQTL/;
 	mkdir source_data/GTEx_Analysis_v8_eQTL/eqtl;
