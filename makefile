@@ -3,10 +3,14 @@
 test.pdf:
 	Rscript -e “rmarkdown::render(‘./scratch/test.Rmd’)”
 
-report.pdf: preprocessed_data download_source_data
-	rm report.pdf;
+report.pdf: figures/fig1.png figures/fig2.png figures/fig3.png figures/fig4.png
+	rm -f report.pdf;
 
-figures/fig3.png: working_data/merged_egenes.txt preprocessed_data download_source_data
+figures/fig4.png: data/merged_egenes.txt
+	rm -f figures/fig4.png;
+	Rscript scripts/gene_distribution_genome.R
+
+figures/fig3.png: data/merged_egenes.txt scripts/tss_distance_vs_slope_plot.R
 	rm -f figures/fig3.png;
 	Rscript scripts/tss_distance_vs_slope_plot.R
 
@@ -21,7 +25,7 @@ figures/fig1.png: data/merged_egenes.txt
 data/merged_egenes.txt: make_directories
 	rm -fr working_data/;
 	head -1 source_data/GTEx_Analysis_v8_eQTL/genes/Lung.v8.egenes.txt > data/merged_egenes.txt;
-	tail -n +2 -q source_data/GTEx_Analysis_v8_eQTL/genes/*.v8.egenes.txt >> data/merged_egenes.txt;
+	tail -n +2 -q source_data/GTEx_Analysis_v8_eQTL/genes/*.v8.egenes.txt >> data/merged_egenes.txt
 
 make_directories: preprocessed_data
 	rm -f make_directories;
@@ -49,9 +53,10 @@ download_source_data:
 
 
 clean:
-	rm -f report.pdf
-	rm -rf working_data/
-	rm -rf figures/
-	rm -rf source_data/
-	rm -f download_source_data
-	rm -f preprocessed_data
+	rm -f report.pdf;
+	rm -rf working_data/;
+	rm -rf figures/;
+	rm -rf source_data/;
+	rm -f download_source_data;
+	rm -f preprocessed_data;
+	rm -f make_directories;

@@ -2,16 +2,14 @@
 library(tidyverse)
 library(ggplot2)
 
-data <- read_tsv('working_data/merged_egenes.txt')
+data <- read_tsv('data/merged_egenes.txt')
 
 genes <- data %>% select(gene_id,gene_chr,gene_start)
 genes <- genes %>% distinct(gene_id, .keep_all = TRUE)
-
-
-g <- genes %>% group_by(gene_chr) %>% tally()
+genes <- genes %>% group_by(gene_chr) %>% tally()
 chrOrder <- c(paste("chr",1:22,sep=""),"chrX")
-g$gene_chr <- factor(g$gene_chr, levels=chrOrder)
-g <- g[order(g$gene_chr),]
+genes$gene_chr <- factor(genes$gene_chr, levels=chrOrder)
+genes <- genes[order(genes$gene_chr),]
 
-ggplot(g,aes(gene_chr,n)) + geom_bar(stat="identity")
-# need to add title; make pretty
+ggplot(genes, aes(gene_chr,n)) + geom_bar(stat = "identity") + ggtitle('Gene Distribution Across Chromosomes') + labs(x = 'Chromosome', y = 'Number of Genes')
+ggsave("figures/fig4.png")
