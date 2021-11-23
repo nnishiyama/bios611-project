@@ -1,12 +1,11 @@
 .DS_Store
 .DS_Store?
-
 source_data/
 scratch/
 data/
 figures/
-
 Rplots.pdf
 download_source_data
 make_directories
 preprocessed_data
+scratch/.DS_Store
