@@ -4,7 +4,7 @@ BIOS611 Project
 This is my project to analyze expression Quantitative Trait Loci (eQTL) from the Genotype-Tissue Expression (GTEx) project. eQTL analysis finds statistical associations between genetic variants within a population and expression of a particular gene. GTEx has quantified eQTLs in over 40 human tissues. This project will use summary statistics and meta-data to interrogate these findings further. For example, eQTLs may have commonalities or differences across tissues such as in their presence/absence and effect size since gene expression can also be specific to a given tissue. I am interested to see if I can find patterns within this data across tissues, either from the variant or the gene perspective. Some questions I will try to answer:
  - Does the distance between a genetic variant and a gene affect its significance?
  - Similarly, does the distance determine the effect size of the eQTL?
- - Are variants located within gene dense regions more likely to be associated with eQTLs that variants located in spare gene regions?
+ - Are variants located within gene dense regions more likely to be associated with eQTLs that variants located in sparse gene regions?
  - Are there leading genetic variants/genes/eQTLs that are shared across a majority of tissues or tissue systems?
  - If I can detect some leading or shared signals, do genetic variants act in the same way across tissues (or do the effects correlate?)?
  - And other fun stuff!

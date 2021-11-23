@@ -6,9 +6,13 @@ test.pdf:
 report.pdf: preprocessed_data download_source_data
 	rm report.pdf;
 
+figures/fig3.png: working_data/merged_egenes.txt preprocessed_data download_source_data
+	rm -f figures/fig3.png;
+	Rscript scripts/tss_distance_vs_slope_plot.R
+
 figures/fig2.png: working_data/merged_egenes.txt preprocessed_data download_source_data
 	rm -f figures/fig2.png;
-	Rscript scripts/tss_distance_vs_slope_plot.R
+	Rscript scripts/tss_distance_vs_significance.R
 
 figures/fig1.png: working_data/merged_egenes.txt preprocessed_data download_source_data
 	rm -f figures/fig1.png;
