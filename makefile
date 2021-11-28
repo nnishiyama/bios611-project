@@ -1,10 +1,28 @@
 .PHONY: clean
 
-test.pdf:
-	Rscript -e “rmarkdown::render(‘./scratch/test.Rmd’)”
+test.pdf: scratch/test.Rmd
+	#Rscript -e “rmarkdown::render(‘./scratch/test.Rmd’)”;
+	R -r "rmarkdown::render(\"scratch/test.Rmd\", output_format=\"pdf_document\")"
 
-report.pdf: figures/fig1.png figures/fig2.png figures/fig3.png figures/fig4.png figures/fig5.png
+report.pdf: figures/fig1.png figures/fig2.png figures/fig3.png figures/fig4.png figures/fig5.png figures/fig6.png figures/fig7.png
 	rm -f report.pdf;
+	R -r "rmarkdown::render(\"report.Rmd\", output_format=\"pdf_document\")"
+
+figures/fig8.png: data/merged_eqtl.txt.gz data/merged_egenes.txt scripts/variant_gene_density_eqtl_hist_all.R
+	rm -f figures/fig8.png;
+	Rscript scripts/variant_gene_density_eqtl_hist_all.R
+
+figures/table1.png: data/merged_egenes.txt scripts/variant_gene_density_table.R
+	rm -f figures/table1.png;
+	Rscript scripts/variant_gene_density_table.R
+
+figures/fig7.png: data/merged_egenes.txt scripts/variant_gene_density_eqtl_hist.R
+	rm -f figures/fig7.png;
+	Rscript scripts/variant_gene_density_eqtl_hist.R
+
+figures/fig6.png: data/merged_egenes.txt scripts/variant_gene_density_gene_hist.R
+	rm -f figures/fig6.png;
+	Rscript scripts/variant_gene_density_gene_hist.R
 
 figures/fig5.png: data/merged_eqtl.txt.gz scripts/variant_distribution_genome.R
 	rm -f figures/fig5.png;
@@ -31,7 +49,7 @@ data/merged_eqtl.txt.gz: make_directories
 	head -1 source_data/GTEx_Analysis_v8_eQTL/eqtl/Lung.v8.signif_variant_gene_pairs.txt > data/merged_eqtl.txt;
 	tail -n +2 -q source_data/GTEx_Analysis_v8_eQTL/eqtl/*.v8.signif_variant_gene_pairs.txt >> data/merged_eqtl.txt;
 	gzip data/merged_eqtl.txt;
-	#rm -fr source_data/GTEx_Analysis_v8_eQTL/eqtl/;
+	rm -fr source_data/GTEx_Analysis_v8_eQTL/eqtl/;
 
 data/merged_egenes.txt: make_directories
 	rm -f data/merged_egenes.txt;

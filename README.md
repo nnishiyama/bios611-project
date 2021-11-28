@@ -43,7 +43,11 @@ Within RStudio, select the `Terminal` tab and move into the project directory:
 cd project/
 ```
 
-Finally, use `make` to generate targets.
+Finally, use `make` to generate targets. Such as:
+
+```
+make figures/fig1.png
+```
 
 To build the report summarizing my data science project, run the following command in the `Terminal` tab:
 

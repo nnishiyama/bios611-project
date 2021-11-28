@@ -1,7 +1,9 @@
 # R script to quantify likelihood of a variant forming an eQTL based on gene density
 library(tidyverse)
 library(data.table)
-library(ggplot2)
+library(formattable)
+library(htmltools)
+library(webshot)
 
 data <- read_tsv('data/merged_egenes.txt')
 data <- data %>% select(variant_id,chr,variant_pos,gene_id,gene_chr,gene_start,qval)
@@ -31,18 +33,21 @@ eqtl <- eqtl %>% filter(qval < 0.05) %>% group_by(variant_id) %>% tally() %>% re
 var <- var %>% left_join(y = eqtl, by = "variant_id")
 var <- var %>% mutate(num_eqtl = replace_na(num_eqtl, 0))
 var <- var %>% mutate(prop = (num_eqtl/num_genes)*100)
-#var <- var %>% arrange(desc(prop))
+var <- var %>% arrange(desc(num_eqtl))
 
-#################################################################################
+v <- head(var) %>% select(variant_id,num_genes,num_eqtl,prop)
+t <- formattable(v, align=c("l","c","c","c"))
 
+export_formattable <- function(f, file, width = "100%", height = NULL, 
+                               background = "white", delay = 0.2)
+{
+  w <- as.htmlwidget(f, width = width, height = height)
+  path <- html_print(w, background = background, viewer = NULL)
+  url <- paste0("file:///", gsub("\\\\", "/", normalizePath(path)))
+  webshot(url,
+          file = file,
+          selector = ".formattable_widget",
+          delay = delay)
+}
 
-# histogram of gene density windows
-# should filter for greater than zero
-ggplot(var, aes(num_genes)) + geom_histogram(binwidth=1, color="black", fill="white") + geom_vline(aes(xintercept = median(num_genes)), color="red", linetype="dashed")
-ggplot(var, aes(num_eqtl)) + geom_histogram(binwidth=1, color="black", fill="white")
-ggplot(var %>% filter(num_eqtl > 0), aes(num_eqtl)) + geom_histogram(binwidth=1, color="black", fill="white")
-ggplot(var %>% filter(prop > 0, prop <= 10), aes(prop)) + geom_histogram(binwidth=1, color="black", fill="white")
-#plot density across chromosomes
-ggplot(var, aes(chr,prop)) + geom_point()
-
-
+export_formattable(t, "figures/table1.png")

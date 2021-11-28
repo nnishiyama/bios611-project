@@ -31,18 +31,6 @@ eqtl <- eqtl %>% filter(qval < 0.05) %>% group_by(variant_id) %>% tally() %>% re
 var <- var %>% left_join(y = eqtl, by = "variant_id")
 var <- var %>% mutate(num_eqtl = replace_na(num_eqtl, 0))
 var <- var %>% mutate(prop = (num_eqtl/num_genes)*100)
-#var <- var %>% arrange(desc(prop))
 
-#################################################################################
-
-
-# histogram of gene density windows
-# should filter for greater than zero
-ggplot(var, aes(num_genes)) + geom_histogram(binwidth=1, color="black", fill="white") + geom_vline(aes(xintercept = median(num_genes)), color="red", linetype="dashed")
-ggplot(var, aes(num_eqtl)) + geom_histogram(binwidth=1, color="black", fill="white")
-ggplot(var %>% filter(num_eqtl > 0), aes(num_eqtl)) + geom_histogram(binwidth=1, color="black", fill="white")
-ggplot(var %>% filter(prop > 0, prop <= 10), aes(prop)) + geom_histogram(binwidth=1, color="black", fill="white")
-#plot density across chromosomes
-ggplot(var, aes(chr,prop)) + geom_point()
-
-
+ggplot(var %>% filter(num_eqtl > 0), aes(num_eqtl)) + geom_histogram(binwidth=1, color="black", fill="white") + ggtitle('eQTL Density for Primary eQTL Variants') + labs(x = 'Number of eQTL per Primary eQTL Variant')
+ggsave("figures/fig7.png")
