@@ -4,7 +4,7 @@ library(ggplot2)
 
 data <- read_tsv('data/merged_egenes.txt')
 
-genes <- data %>% select(gene_id,gene_chr,gene_start)
+genes <- data %>% select(gene_id,gene_chr)
 genes <- genes %>% distinct(gene_id, .keep_all = TRUE)
 genes <- genes %>% group_by(gene_chr) %>% tally()
 chrOrder <- c(paste("chr",1:22,sep=""),"chrX")
