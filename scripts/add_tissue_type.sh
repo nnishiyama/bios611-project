@@ -5,7 +5,7 @@
 for f in ${1}*.txt; 
 do BASE=${f##*/}; 
 TISSUE=${BASE%%.*}; 
-sed -i "" "s/$/	$TISSUE/" $f;
-sed -i "" "1s/$TISSUE/tissue/" $f;
-sed -i "" "s/_b38//" $f;
+sed -i "s/$/	$TISSUE/" $f;
+sed -i "1s/$TISSUE/tissue/" $f;
+sed -i "s/_b38//" $f;
 done;
