@@ -1,9 +1,13 @@
 .PHONY: clean
 
 
-report.pdf: scripts/report.Rmd figures/fig1.png figures/fig2.png figures/fig3.png figures/fig4.png figures/fig5.png figures/fig6.png figures/fig7.png figures/fig8.png
+report.pdf: scripts/report.Rmd figures/fig1.png figures/fig2.png figures/fig3.png figures/fig4.png figures/fig5.png figures/fig6.png figures/fig7.png figures/fig8.png figures/fig9.png figures/table1.png figures/table2.png figures/table3.png
 	rm -f report.pdf;
-	Rscript scripts/make_report.R 
+	Rscript scripts/make_report.R
+
+figures/table3.png: install_dep data/merged_egenes.txt scripts/top_eqtl.R
+	rm -f figures/table3.png;
+	Rscript scripts/top_eqtl.R 
 
 figures/table2.png: install_dep data/merged_eqtl.txt.gz data/merged_egenes.txt scripts/variant_gene_density_table_all.R
 	rm -f figures/table2.png;
