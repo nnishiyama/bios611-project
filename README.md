@@ -11,6 +11,8 @@ This is my project to analyze expression Quantitative Trait Loci (eQTL) from the
 
 *** Fair Warning: the source data for this project requires ~10G of space, so plan accordingly! ***
 
+**Also, please make sure your Docker container resources are set with a memory limit of at least 6G. Unfortunately, I couldn't figure out how to set this when setting up the container (using the --memory=6g flag did not seem to work for me). If you have the Docker Desktop GUI installed, open it and go to Settings/Preferences -> Resources -> drag the memory bar to the desired amount -> click Apply & Restart . Otherwise, you will likely get dumped when running processes and targets will not complete.**
+
 
 
 To run this code, first clone this repo by typing the following into your command line/terminal:
