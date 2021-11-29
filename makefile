@@ -1,12 +1,9 @@
 .PHONY: clean
 
-test.pdf: scratch/test.Rmd
-	#Rscript -e “rmarkdown::render(‘./scratch/test.Rmd’)”;
-	R -r "rmarkdown::render(\"scratch/test.Rmd\", output_format=\"pdf_document\")"
 
-report.pdf: figures/fig1.png figures/fig2.png figures/fig3.png figures/fig4.png figures/fig5.png figures/fig6.png figures/fig7.png figures/fig8.png
+report.pdf: scripts/report.Rmd figures/fig1.png figures/fig2.png figures/fig3.png figures/fig4.png figures/fig5.png figures/fig6.png figures/fig7.png figures/fig8.png
 	rm -f report.pdf;
-	R -r "rmarkdown::render(\"report.Rmd\", output_format=\"pdf_document\")"
+	Rscript scripts/make_report.R 
 
 figures/table2.png: data/merged_eqtl.txt.gz data/merged_egenes.txt scripts/variant_gene_density_table_all.R
 	rm -f figures/table2.png;
