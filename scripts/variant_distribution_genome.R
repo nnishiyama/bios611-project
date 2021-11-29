@@ -2,6 +2,7 @@
 
 library(tidyverse)
 library(data.table)
+library(R.utils)
 
 data <- fread("data/merged_eqtl.txt.gz", select = c("variant_id"))
 data <- data %>% distinct(variant_id, .keep_all = TRUE)

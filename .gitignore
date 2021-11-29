@@ -9,3 +9,4 @@ download_source_data
 make_directories
 preprocessed_data
 scratch/.DS_Store
+.Rhistory

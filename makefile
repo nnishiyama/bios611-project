@@ -5,7 +5,7 @@ report.pdf: scripts/report.Rmd figures/fig1.png figures/fig2.png figures/fig3.pn
 	rm -f report.pdf;
 	Rscript scripts/make_report.R 
 
-figures/table2.png: data/merged_eqtl.txt.gz data/merged_egenes.txt scripts/variant_gene_density_table_all.R
+figures/table2.png: install_dep data/merged_eqtl.txt.gz data/merged_egenes.txt scripts/variant_gene_density_table_all.R
 	rm -f figures/table2.png;
 	Rscript scripts/variant_gene_density_table_all.R
 
@@ -17,7 +17,7 @@ figures/fig8.png: data/merged_eqtl.txt.gz data/merged_egenes.txt scripts/variant
 	rm -f figures/fig8.png;
 	Rscript scripts/variant_gene_density_eqtl_hist_all.R
 
-figures/table1.png: data/merged_egenes.txt scripts/variant_gene_density_table.R
+figures/table1.png: install_dep data/merged_egenes.txt scripts/variant_gene_density_table.R
 	rm -f figures/table1.png;
 	Rscript scripts/variant_gene_density_table.R
 
@@ -48,6 +48,11 @@ figures/fig2.png: data/merged_egenes.txt scripts/tss_distance_vs_significance.R
 figures/fig1.png: data/merged_egenes.txt scripts/tss_distance_plots.R
 	rm -f figures/fig1.png;
 	Rscript scripts/tss_distance_plots.R
+
+install_dep: scripts/install_dep.R
+	rm -f install_dep;
+	Rscript scripts/install_dep.R
+	touch install_dep
 
 data/merged_eqtl.txt.gz: make_directories
 	rm -f data/merged_eqtl.txt.gz;

@@ -4,6 +4,7 @@ library(data.table)
 library(formattable)
 library(htmltools)
 library(webshot)
+library(R.utils)
 
 data <- read_tsv('data/merged_egenes.txt')
 data <- data %>% select(variant_id,chr,variant_pos,gene_id,gene_chr,gene_start,qval)

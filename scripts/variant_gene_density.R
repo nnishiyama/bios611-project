@@ -41,7 +41,7 @@ var <- var %>% mutate(prop = (num_eqtl/num_genes)*100)
 ggplot(var, aes(num_genes)) + geom_histogram(binwidth=1, color="black", fill="white") + geom_vline(aes(xintercept = median(num_genes)), color="red", linetype="dashed")
 ggplot(var, aes(num_eqtl)) + geom_histogram(binwidth=1, color="black", fill="white")
 ggplot(var %>% filter(num_eqtl > 0), aes(num_eqtl)) + geom_histogram(binwidth=1, color="black", fill="white")
-ggplot(var %>% filter(prop > 0, prop <= 10), aes(prop)) + geom_histogram(binwidth=1, color="black", fill="white")
+ggplot(var %>% filter(prop > 0), aes(prop)) + geom_histogram(binwidth=1, color="black", fill="white")
 #plot density across chromosomes
 ggplot(var, aes(chr,prop)) + geom_point()
 
