@@ -99,3 +99,4 @@ clean:
 	rm -f download_source_data;
 	rm -f preprocessed_data;
 	rm -f make_directories;
+	rm -f install_dep;

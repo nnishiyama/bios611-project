@@ -1,0 +1,99 @@
+---
+title: "BIOS 611 Data Science Project"
+author: "Nina Nishiyama"
+date: "11/29/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This is my report on my BIOS 611 data science project. It is by no means supposed to be an official report, but more of a casual walk-through of my project, my questions and thought processes along the way, and my findings.
+
+Exploratory analysis?
+
+This is the paragraph where I introduce eQTL and my data set. Need to describe GTEx and add link?
+
+One paragraph about what an eQTL is. Include example figure? Talk about primary/lead variants vs all variants?
+
+## Background, or a place to start
+
+In its most basic form, eQTL analysis assumes linear genomic space. This suggests that there will exist some underlying relationship between the components that make up an eQTL, the variants and genes. We can quantify the density of significant eQTL based on the distance between its variant and gene transcription start site (TSS).
+
+![The genomic distance (in base pairs) between significant eQTL variants and their associated genes.](../figures/fig1.png){height=50%}
+
+We can see from the plot in Fig.1 that the majority of eQTL variants are located close to genes they form eQTL with. This is actually a known phenomena, but let's see what else we can tease out of it. 
+
+For example, we have so far only looked at eQTL that have been deemed "statistically significant". Does this pattern hold true for when we consider all eQTL? Or more colloquially, is the significance of an eQTL based on the distance between a variant and a gene in general? Furthermore, since we use linear regression to determine eQTL, does the distance between a variant and gene impact the effect size or the slope of the eQTL?
+
+Let's take a look.
+
+## Genomic Distance Metrics on eQTL Statistics
+
+To visually determine whether eQTL significance is influenced by the distance between a variant and a gene, let's plot all eQTL reported by GTEx.
+
+![The significance of eQTLs based on the genomic distance (in bp) between eQTL variants and their associated genes](../figures/fig2.png){height=50%}
+
+We can see that from Fig.2, generally, this pattern still holds true. Although there are some number of eQTL with very high significance which contain variants that are 0.5-1Mb away from their associated gene TSS.
+
+Let's also look at the eQTL effect size based on gene distance for significant eQTL. 
+
+![The effect size of significant eQTL based on the genomic distance between eQTL variants and associated genes](../figures/fig3.png){height=50%}
+
+Interestingly, Fig.3 suggests that there seems to be absolutely no relationship between the distance between a variant and its associated gene, and the effect size of an eQTL. However, the effect size of an eQTL is also influenced by the expression of the gene in question. This suggests that distance between a variant and gene alone is not enough to explain the complex relationship of genetic regulation. 
+
+## Genomic Density Metrics on eQTL Statistics
+
+Let's take things a bit further, but in a different direction. 
+
+For standard eQTL analysis, all tested variants are weighted equally. However, we know that genes are not distributed evenly across the genome, nor often are the variants that we test for associations. Let's look at the distribution of the genes and variants tested by GTEx.
+
+![The distribution of genes across human chromosomes](../figures/fig4.png){height=50%}
+
+![The distribution of variants tested by GTEx across human chromosomes](../figures/fig5.png){height=50%}
+
+In Fig.4, we can see that the distribution of genes across chromosomes varies. From Fig.5, we can also see that there is a similar distribution of variants tested across the chromosomes in this data set. 
+
+This begs the question, if a variant is located in a gene dense region of the genome, is it more likely to form eQTLs with local genes compared to a variant located in a gene-sparse region? If so, we may want to reconsider how we weigh variants when we test for associations. Let us investigate.
+
+For most local eQTL analysis, associations are tested between a given gene and all variants within a defined window around the beginning of a gene. This method assumes that 1) variants close to a gene are more likely to affect it, 2) genomic space is linear, and 3) there is a cause-effect relationship in which a variant controls the expression of a gene. While we have briefly looked at the first two assumptions, the third can allow us to potentially ask some interesting questions if we assume a variant plays a causal role. 
+
+For example, it may be interesting to flip the eQTL model dynamic and instead, look at given a variant's position, how many genes does it have the potential to affect? And how many does it actually (based on eQTL statistics)?
+
+So what I did was take my eQTL data set and try to flip it on its head. I took the primary eQTL variants across all tissue types (830,649 variants) and defined a 1 Mb window around each variant to figure out how many possible genes (out of roughly 40,000 genes across the genome) each variant would be tested with.
+
+![Histogram of the gene density based on a variant window +/- 1 Mb around each variant. Red line = median number of genes within a variant window.](../figures/fig6.png){height=50%}
+
+From Fig.6, we can see that most variants have a fair number of genes that fall within there window. The red line denotes the median number of genes within a variant window, which is 36. Furthermore, there is actually a sizable number of variants that have even more than 100 genes within their window. 
+
+However, when we look at how many eQTL are formed by each primary eQTL variant, the data is slightly underwhelming. 
+
+![Histogram of eQTL formed by each primary eQTL variant](../figures/fig7.png){height=50%}
+
+The histogram in Fig.7 tells us that primary eQTL variants are mostly associated with only 1 gene and not multiple genes.
+
+Show proportion data for primary eQTL?
+
+However, we are only looking primary eQTL variants, or the top signals. You can imagine that genes can form eQTL with multiple variants. What if we look at all significant gene-variant pairs?
+
+![Histogram of eQTL formed by all eQTL variants](../figures/fig8.png){height=50%}
+
+Again, many variants are only associated with one gene by eQTL analysis. However, we do see an increase in the number of hits per variant.
+
+Look at proportion. Create one script to plot proportion and one plot to make table ordered by eqtl
+
+## Summary and Conclusions
+
+## Future Directions
+
+To take this project a bit further, I think it would be interesting to
+
+From a genomics perspective, it would also be interesting to dive into some of these specific variants a bit further, but that's definitely outside the scope of this project. For example, when I looked at the eQTL density for primary eQTL variants, there was one variant, chr19_21570287_A_C that is significantly associated with 14 genes. This is out of a possible 70, based on my variant window calculations, and so 20% of these genes are actually influenced by the chr19_21570287_A_C variant. This could actually have some interesting biological implications on a systems- or organismal-level since my observation was made across eQTL in all tissues quantified by GTEx and we know that variants have different effects in different tissues. 
+
+## References
+1. Sun, W., & Hu, Y. (2013). eQTL Mapping Using RNA-seq Data. Statistics in biosciences, 5(1), 198–219. https://doi.org/10.1007/s12561-012-9068-3
+2. GTEx Consortium (2020). The GTEx Consortium atlas of genetic regulatory effects across human tissues. Science (New York, N.Y.), 369(6509), 1318–1330. https://doi.org/10.1126/science.aaz1776
+
