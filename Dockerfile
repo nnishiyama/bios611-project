@@ -4,3 +4,4 @@ RUN R -e "install.packages('tinytex')";
 RUN R -e "tinytex::install_tinytex()";
 RUN R -e "install.packages('webshot')"; 
 RUN R -e "webshot::install_phantomjs()";
+RUN R -e "BiocManager::install('biomaRt')";
